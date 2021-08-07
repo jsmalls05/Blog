@@ -1,17 +1,25 @@
 const express = require("express");
 const app = express();
-const port = 8000;
-const authRoute = require("./server/routes/author")
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const authRoute = require("./routes/author");
+const userRoute = require("./routes/users");
 
-require("./server/config/mongoose.config");
+dotenv.config();
+app.use(express.json());
 
-app.get("/", (req, res) => {
-    console.log("Lets get started");
-    res.json({ message: "good job" })
-})
-
-app.use(express.json(), express.urlencoded({ extended: true }));
+mongoose
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    })
+    .then(console.log("Connected to MongoDB"))
+    .catch(err => console.log(err));
 
 app.use("/api/author", authRoute);
+app.use("/api/users", userRoute);
 
-app.listen(port, () => console.log(`We're up and running on port: ${port}!`));
+app.listen("8000", () => {
+    console.log(`Backend is running on port 8000`)
+});
