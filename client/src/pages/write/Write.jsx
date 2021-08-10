@@ -16,9 +16,9 @@ export default function Write() {
             title,
             desc,
         };
-        if(file){
+        if (file){
             const data = new FormData();
-            const filename = Date.now() +file.className;
+            const filename = Date.now() + file.name;
             data.append("name", filename);
             data.append("file", file);
             newPost.photo = filename;
@@ -27,9 +27,8 @@ export default function Write() {
             }catch(err){}
         }
         try {
-            const res = axios.post("/posts", newPost);
-            window.location.replace("/post/"+res.data._id);
-
+            const res = await axios.post("/posts", newPost);
+            window.location.replace("/post/" + res.data._id);
         }catch(err){}
     };
     return (
@@ -40,21 +39,33 @@ export default function Write() {
             src={URL.createObjectURL(file)}
             alt="" 
             />
-            )}
-            
+            )}            
             <form className="writeForm" onSubmit={handleSubmit}>
                 <div className="writeFormGroup">
                     <label htmlFor="fileInput">
-                    <i className="writeIcon fas fa-plus"></i>
+                        <i className="writeIcon fas fa-plus"></i>
                     </label>
-                    <input type="file" id="fileInput" style={{display: "none"}} onChange={e=>setFile(e.target.files[0])}/>
-                    <input type="text" placeholder="Title" className="writeInput" autoFocus={true} onChange={e=>setTitle(e.target.value)}/>
+                    <input type="file" 
+                        id="fileInput" 
+                        style={{display: "none"}} 
+                        onChange={(e)=>setFile(e.target.files[0])}
+                    />
+                    <input type="text" 
+                        placeholder="Title" 
+                        className="writeInput" 
+                        autoFocus={true} 
+                        required
+                        minlength="3"
+                        onChange={e=>setTitle(e.target.value)}
+                    />
                 </div>
                 <div className="writeFormGroup">
                     <textarea 
                         placeholder="Tell your story..." 
                         type="text" 
                         className="writeInput writeText"
+                        required
+                        minlength="10"
                         onChange={e=>setDesc(e.target.value)}
                     ></textarea>                    
                 </div>
