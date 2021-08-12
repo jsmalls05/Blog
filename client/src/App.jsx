@@ -12,7 +12,7 @@ import {
   Link
 }  from "react-router-dom";
 import { useContext } from "react";
-import { Context } from "./context/Context";
+import { Context } from "./context/Context"; 
 
 function App() {
   const {user} = useContext(Context); 
