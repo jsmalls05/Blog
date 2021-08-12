@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("https://cdn.shopify.com/s/files/1/0011/7103/0131/products/image_1125x.jpg?v=1565039271");
     background-size: cover;
 }
